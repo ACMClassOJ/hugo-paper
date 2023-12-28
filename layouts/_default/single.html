@@ -5,17 +5,47 @@
     <h1 class="!my-0 pb-2.5">{{ .Title }}</h1>
 
     {{ if ne .Type "page" }}
+
+    {{ $single_author := or .Params.author site.Author.name }}
+    {{ $avatar_url := false }}
+    {{ $author_desc := false }}
+    {{ if reflect.IsMap $single_author }}
+    {{ $single_author = $single_author.name }}
+    {{ $avatar_url = .Params.author.avatar }}
+    {{ $author_desc = .Params.author.description }}
+    {{ end }}
+
     <div class="text-sm antialiased opacity-60">
       {{ if .Date }}
       <time>{{ .Date | time.Format ":date_medium" }}</time>
       {{ end }}<!---->
-      {{ $single_author := or .Params.Author site.Author.name }}
       <!---->
-      {{ if $single_author }}
+      {{ if and $single_author (not $avatar_url) }}
       <span class="mx-1">&middot;</span>
       <span>{{ $single_author }}</span>
       {{ end }}
     </div>
+
+    {{ if $avatar_url }}
+    <div class="flex items-center" style="margin-top: 1.5rem;">
+      <div
+        class="mr-5 shrink-0"
+      >
+        <img
+          class="my-0 aspect-square w-16 rounded-l-md rounded-r-md !bg-black/5 dark:!bg-black/80"
+          src="{{ $avatar_url }}"
+          alt="{{ $single_author }}"
+        >
+      </div>
+      <div>
+        <div class="font-bold">{{ $single_author }}</div>
+        <div class="break-words opacity-60 text-[0.9em]">
+          {{ $author_desc }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+
     {{ end }}
   </header>
 
@@ -38,19 +68,19 @@
   {{ if not site.Params.disablePostNavigation }}<!---->
   {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}<!---->
   {{ if and (gt (len $pages) 1) (in $pages . ) }}
-  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+  <nav class="mt-24 flex rounded-lg text-lg">
     {{ with $pages.Next . }}
     <a
-      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      class="flex w-1/2 items-center rounded-l-md pr-3 font-semibold no-underline"
       href="{{ .Permalink }}"
-      ><span class="mr-1.5">←</span><span>{{ .Name }}</span></a
+      >← {{ .Name }}</a
     >
     {{ end }}<!---->
     {{ with $pages.Prev . }}
     <a
-      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md pl-3 font-semibold no-underline"
       href="{{ .Permalink }}"
-      ><span>{{ .Name }}</span><span class="ml-1.5">→</span></a
+      >{{ .Name }} →</a
     >
     {{ end }}
   </nav>

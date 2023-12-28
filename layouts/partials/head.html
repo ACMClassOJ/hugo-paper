@@ -10,21 +10,24 @@
   <title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ site.Title }}</title>
 
   <!-- Meta -->
-  <meta name="theme-color" />
+  <meta name="theme-color">
 
   <!-- Author -->
   {{ $site_author := or site.Author.name site.Params.name site.Title }}
   <!---->
   {{ if eq .Kind "page" }}
-  <meta name="description" content="{{ .Summary }}" />
-  <meta name="author" content="{{ or .Params.author $site_author }}" />
+  <meta name="description" content="{{ .Summary }}">
+  {{ $single_author := .Params.author }}
+  {{ if reflect.IsMap $single_author }}
+  {{ $single_author = $single_author.name }}
+  {{ end }}
+  <meta name="author" content="{{ or $single_author $site_author }}">
   {{ else }}
   <!---->
   <meta
     name="description"
-    content="{{ site.Params.description | default (print `A personal blog`) }}"
-  />
-  <meta name="author" content="{{ $site_author }}" />
+    content="{{ site.Params.description | default (print `The technical and operations blog of ACM class online judge`) }}"
+  >
   {{ end }}
 
   <!-- CSS & JS -->
@@ -33,26 +36,19 @@
   {{ $custom := resources.Get "custom.css" }}
   <!---->
   {{ $css := slice $main $custom | resources.Concat "main.css" | minify }}
-  <link rel="preload stylesheet" as="style" href="{{ $css.Permalink }}" />
-
-  <!-- Dark Icon -->
-  {{ $dark_icon := "theme.png" }}
-  <!---->
-  {{ if site.Params.monoDarkIcon }}{{ $dark_icon = "theme.svg" }}{{ end }}
-  <!---->
-  <link rel="preload" as="image" href="{{ $dark_icon | absURL }}" />
+  <link rel="preload stylesheet" as="style" href="{{ $css.Permalink }}">
 
   <!-- Avatar -->
   {{ $avatar_url := $.Scratch.Get "avatar_url" }}
   <!---->
   {{ if $avatar_url }}
-  <link rel="preload" as="image" href="{{ $avatar_url }}" />
+  <link rel="preload" as="image" href="{{ $avatar_url }}">
   {{ end }}
   <!---->
 
   <!-- Social List -->
   {{ range $.Scratch.Get "social_list" }}
-  <link rel="preload" as="image" href="{{ printf `%s.svg` . | absURL }}" />
+  <link rel="preload" as="image" href="{{ printf `%s.svg` . | absURL }}">
   {{ end }}
   <!---->
 
@@ -74,8 +70,7 @@
   <!---->
 
   <!-- Favicon -->
-  <link rel="icon" href="{{ `favicon.ico` | absURL }}" />
-  <link rel="apple-touch-icon" href="{{ `apple-touch-icon.png` | absURL }}" />
+  <link rel="icon" href="/favicon.ico">
 
   <!-- Generator -->
   {{ hugo.Generator }}
@@ -97,10 +92,10 @@
     type="{{ .MediaType.Type }}"
     href="{{ .Permalink }}"
     title="{{ site.Title }}"
-  />
+  >
   {{ end }}
   <!-- Canonical -->
-  <link rel="canonical" href="{{ .Permalink }}" />
+  <link rel="canonical" href="{{ .Permalink }}">
   {{ end }}
   <!---->
 </head>
