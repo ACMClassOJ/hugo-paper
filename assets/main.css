@@ -43,6 +43,7 @@
 
 html {
   line-height: 1.5;
+  text-align: justify;
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
@@ -57,9 +58,18 @@ html {
     -apple-system,
     '思源黑体',
     'Source Han Sans SC',
+    'Source Han Sans CN',
     'Source Han Sans',
     'Noto Sans CJK SC',
     'Noto Sans CJK',
+
+    'Hiragino Sans GB',
+    'Pingfang SC',
+    'FZLTXHK--GBK1-0',
+    'Lantinghei SC',
+    'Heiti SC',
+    'Microsoft Yahei',
+
     BlinkMacSystemFont,
     'Segoe UI',
     Roboto,
@@ -780,7 +790,7 @@ body {
 .prose :where(h1):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   color: var(--tw-prose-headings);
   font-weight: 800;
-  font-size: 2.25em;
+  font-size: 2em;
   margin-top: 0;
   margin-bottom: 0.8888889em;
   line-height: 1.1111111;
@@ -1868,9 +1878,9 @@ body {
 }
 
 article {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
   line-height: 1.75rem;
-  line-height: 1.8;
+  line-height: 1.75;
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
