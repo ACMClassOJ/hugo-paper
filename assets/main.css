@@ -44,6 +44,7 @@
 html {
   line-height: 1.5;
   text-align: justify;
+  hyphens: auto;
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
@@ -1887,6 +1888,13 @@ article {
   line-height: 1.75;
   --tw-text-opacity: 1;
   /* color: rgb(0 0 0 / var(--tw-text-opacity)); */
+}
+
+@media (max-width: 48rem) {
+  article {
+    font-size: 0.95rem;
+    text-align: start;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
