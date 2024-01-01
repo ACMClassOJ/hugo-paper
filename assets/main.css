@@ -205,6 +205,13 @@ sup {
   top: -0.5em;
 }
 
+h-hws:has(+ sup[id^="fnref:"]) {
+  display: none !important;
+}
+sup[id^="fnref:"] > a > h-hws:last-child {
+  display: none !important;
+}
+
 /*
 1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
 2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
@@ -764,7 +771,7 @@ body {
 .prose
   :where(blockquote):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   font-weight: 500;
-  font-style: italic;
+  /* font-style: italic; */
   color: var(--tw-prose-quotes);
   border-left-width: 0.25rem;
   border-left-color: var(--tw-prose-quote-borders);
@@ -774,7 +781,7 @@ body {
   padding-left: 1em;
 }
 
-.prose
+/* .prose
   :where(blockquote p:first-of-type):not(
     :where([class~='not-prose'], [class~='not-prose'] *)
   )::before {
@@ -786,7 +793,7 @@ body {
     :where([class~='not-prose'], [class~='not-prose'] *)
   )::after {
   content: close-quote;
-}
+} */
 
 .prose :where(h1):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   color: var(--tw-prose-headings);
